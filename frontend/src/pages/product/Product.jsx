@@ -64,20 +64,20 @@ export const Product = () => {
   const handlePay = (e) => {
     e.preventDefault();
 
-    if (!address) {
+    if (!loggedIn) {
       toast({
         title: "Error",
-        description: "Address cannot be empty.",
+        description: "You need to be logged in to make a purchase.",
         variant: "destructive",
       });
 
       return;
     }
 
-    if (!loggedIn) {
+    if (!address) {
       toast({
         title: "Error",
-        description: "You need to be logged in to make a purchase.",
+        description: "Address cannot be empty.",
         variant: "destructive",
       });
 
