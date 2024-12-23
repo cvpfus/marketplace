@@ -40,6 +40,7 @@ export const Product = () => {
   const [isEditable, setIsEditable] = useState(false);
   const [amount, setAmount] = useState(1);
   const [address, setAddress] = useState(user.data?.Address ?? "");
+  const [open, setOpen] = useState(false);
 
   const { loggedIn } = useOutletContext();
 
@@ -78,6 +79,8 @@ export const Product = () => {
             title: "Success",
             description: "Order placed successfully.",
           });
+
+          setOpen(false);
         },
       }
     );
@@ -211,7 +214,7 @@ export const Product = () => {
                 {formatPrice(amount * product.data.Price)}
               </h1>
             </div>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button type="button">Pay</Button>
               </DialogTrigger>
