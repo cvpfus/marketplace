@@ -64,6 +64,16 @@ export const Product = () => {
   const handlePay = (e) => {
     e.preventDefault();
 
+    if (!address) {
+      toast({
+        title: "Error",
+        description: "Address cannot be empty.",
+        variant: "destructive",
+      });
+
+      return;
+    }
+
     if (!loggedIn) {
       toast({
         title: "Error",

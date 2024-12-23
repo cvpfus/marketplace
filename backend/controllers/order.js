@@ -17,38 +17,54 @@ export const addOrder = (req, res) => {
       .json({ error: "Amount and product ID are required" });
   }
 
-  base("Products").find(productId, (err, record) => {
+  base("Users").find(userId, (err, record) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
 
     if (!record) {
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    const sellerId = record.fields.Seller[0];
-
-    if (sellerId === userId) {
-      return res.status(400).json({ error: "You cannot buy your own product" });
+    if (!record.fields.Address) {
+      return res.status(400).json({ error: "Address cannot be empty" });
     }
 
-    base("Orders").create(
-      {
-        "Order ID": createId(),
-        Amount: Number(amount),
-        Product: [productId],
-        Buyer: [userId],
-        Seller: [sellerId],
-        "Date Ordered": getCurrentDate(),
-      },
-      (err, _) => {
-        if (err) {
-          return res.status(500).json({ error: err.message });
-        }
-
-        return res.status(201).json({ message: "Order added successfully" });
+    base("Products").find(productId, (err, record) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
       }
-    );
+
+      if (!record) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      const sellerId = record.fields.Seller[0];
+
+      if (sellerId === userId) {
+        return res
+          .status(400)
+          .json({ error: "You cannot buy your own product" });
+      }
+
+      base("Orders").create(
+        {
+          "Order ID": createId(),
+          Amount: Number(amount),
+          Product: [productId],
+          Buyer: [userId],
+          Seller: [sellerId],
+          "Date Ordered": getCurrentDate(),
+        },
+        (err, _) => {
+          if (err) {
+            return res.status(500).json({ error: err.message });
+          }
+
+          return res.status(201).json({ message: "Order added successfully" });
+        }
+      );
+    });
   });
 };
 
