@@ -112,7 +112,9 @@ export const getUser = (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    return res.status(200).json(record.fields);
+    const { Password, ...userData } = record.fields;
+
+    return res.status(200).json(userData);
   });
 };
 
