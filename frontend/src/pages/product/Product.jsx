@@ -140,7 +140,7 @@ export const Product = () => {
           setIsEditable(false);
 
           queryClient.refetchQueries({
-            queryKey: ["user"],
+            queryKey: [`user-${item.userRecordId}`],
           });
         },
       }
