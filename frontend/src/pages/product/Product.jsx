@@ -54,6 +54,13 @@ export const Product = () => {
     return <Loader2 className="animate-spin" />;
   }
 
+  const handleAmountChange = (e) => {
+    let { value, min, max } = e.target;
+    value = Math.max(Number(min), Math.min(Number(max), Number(value)));
+
+    setAmount(value);
+  };
+
   const handlePay = (e) => {
     e.preventDefault();
 
@@ -168,7 +175,7 @@ export const Product = () => {
                 placeholder="Amount"
                 min={1}
                 max={100}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={handleAmountChange}
                 value={amount}
                 required
               />
