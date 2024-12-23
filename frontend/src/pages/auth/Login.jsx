@@ -36,11 +36,11 @@ export const Login = () => {
   };
 
   return (
-    <div className="p-8 pt-4 flex flex-col gap-4 items-center w-[400px]">
+    <div className="p-8 pt-4 flex flex-col gap-4 items-center max-w-[400px] w-full">
       <h1 className="text-xl font-bold">Login</h1>
       <div className="mb-4">
         <span>Don&apos;t have an account? </span>
-        <Link to={"/register"} className="text-amber-500">
+        <Link to={"/register"} className="font-semibold underline">
           Register
         </Link>
       </div>

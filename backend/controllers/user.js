@@ -4,10 +4,10 @@ import { createId } from "@paralleldrive/cuid2";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { name, username, password } = req.body;
 
-  if (!username || !password) {
-    res.status(400).json({ error: "Username and password are required" });
+  if (!name || !username || !password) {
+    res.status(400).json({ error: "Name, username and password are required" });
     return;
   }
 
@@ -30,6 +30,7 @@ export const registerUser = async (req, res) => {
       base("Users").create(
         {
           "User ID": createId(),
+          Name: name,
           Username: username.toLowerCase(),
           Password: passwordHash,
         },
@@ -75,6 +76,8 @@ export const loginUser = (req, res) => {
       }
 
       const userForToken = {
+        name: user.Name,
+        address: user.Address,
         username: user.Username,
         recordId: records[0].id,
         userId: user["User ID"],
@@ -82,13 +85,73 @@ export const loginUser = (req, res) => {
 
       const token = jwt.sign(userForToken, process.env.SECRET);
 
-      res
-        .status(200)
-        .json({
-          token,
-          username: user.Username,
-          userId: user["User ID"],
-          userRecordId: records[0].id,
-        });
+      res.status(200).json({
+        token,
+        username: user.Username,
+        userId: user["User ID"],
+        userRecordId: records[0].id,
+      });
     });
+};
+
+export const getUser = (req, res) => {
+  const { userId } = req.params;
+
+  const recordId = req.auth.recordId;
+
+  if (userId !== recordId) {
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+
+  base("Users").find(userId, (err, record) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (!record) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json(record.fields);
+  });
+};
+
+export const updateAddress = (req, res) => {
+  const { userId, address } = req.body;
+
+  const recordId = req.auth.recordId;
+
+  if (!address) {
+    return res.status(400).json({ error: "Address is required" });
+  }
+
+  if (userId !== recordId) {
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+
+  base("Users").find(recordId, (err, record) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (!record) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    base("Users").update(
+      record.id,
+      {
+        Address: address,
+      },
+      (err, _) => {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+
+        return res
+          .status(200)
+          .json({ message: "Address updated successfully" });
+      }
+    );
+  });
 };

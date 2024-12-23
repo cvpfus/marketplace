@@ -65,6 +65,34 @@ export const getProductsByOwner = async ({ userRecordId, token }) => {
   }
 };
 
+export const updateProduct = async ({
+  productRecordId,
+  name,
+  description,
+  price,
+  token,
+}) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/${productRecordId}`,
+      {
+        name,
+        description,
+        price,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
 export const deleteProduct = async ({ productRecordId, imageUrl, token }) => {
   try {
     const response = await axios.delete(

@@ -12,6 +12,7 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,6 +20,7 @@ export const Register = () => {
     event.preventDefault();
     register.mutate(
       {
+        name,
         username,
         password,
       },
@@ -28,23 +30,33 @@ export const Register = () => {
             title: "Success",
             description: "Account registered successfully. You can now login.",
           });
+
+          navigate("/login");
         },
       }
     );
-
-    navigate("/login");
   };
 
   return (
-    <div className="p-8 pt-4 flex flex-col gap-4 items-center w-[400px]">
+    <div className="p-8 pt-4 flex flex-col gap-4 items-center max-w-[400px] w-full">
       <h1 className="text-xl font-bold">Register</h1>
       <div className="mb-4">
         <span>Already have an account? </span>
-        <Link to={"/login"} className="text-amber-500">
+        <Link to={"/login"} className="font-semibold underline">
           Login
         </Link>
       </div>
       <form onSubmit={handleRegister} className="w-full flex flex-col gap-4">
+        <Input
+          placeholder={"Name"}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+          value={name}
+          minLength={4}
+          required
+        />
+
         <Input
           placeholder={"Username"}
           onChange={(e) => {

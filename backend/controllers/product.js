@@ -18,9 +18,7 @@ export const addProduct = async (req, res) => {
 
     const originalBuffer = Buffer.from(dataUrl.split(",")[1], "base64");
 
-    const resizedBuffer = await sharp(originalBuffer)
-      .resize(300, 300)
-      .toBuffer();
+    const resizedBuffer = await sharp(originalBuffer).resize(300).toBuffer();
 
     await S3.send(
       new PutObjectCommand({
@@ -32,11 +30,9 @@ export const addProduct = async (req, res) => {
     );
   } catch (error) {
     res.status(500).json({ error: error.message });
-    console.log("asdad");
     return;
   }
 
-  console.log(name, Number(price), description, imageUrl);
   base("Products").create(
     {
       "Product ID": createId(),
@@ -44,7 +40,7 @@ export const addProduct = async (req, res) => {
       Price: Number(price),
       Description: description,
       "Image URL": imageUrl,
-      User: [req.auth.recordId],
+      Seller: [req.auth.recordId],
     },
     async (err, _) => {
       if (err) {
@@ -66,7 +62,7 @@ export const getProduct = (req, res) => {
       return;
     }
 
-    res.status(200).json(record.fields);
+    res.status(200).json({ ...record.fields, "Record ID": record.id });
   });
 };
 
@@ -74,7 +70,7 @@ export const getProducts = (req, res, next) => {
   if (!!Object.keys(req.query).length) return next();
 
   base("Products")
-    .select({ view: "Grid view" })
+    .select()
     .all((err, records) => {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -135,7 +131,7 @@ export const updateProduct = (req, res) => {
     productId,
     {
       Name: name,
-      Price: price,
+      Price: Number(price),
       Description: description,
       "Image URL": imageUrl,
     },
@@ -154,8 +150,6 @@ export const deleteProduct = (req, res) => {
   const { productId } = req.params;
   const { imageUrl } = req.query;
 
-  console.log(imageUrl);
-
   base("Products").destroy(productId, async (err, _) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -164,8 +158,6 @@ export const deleteProduct = (req, res) => {
 
     try {
       const imagePath = imageUrl.split("/marketplace/")[1];
-
-      console.log(imagePath);
 
       await S3.send(
         new DeleteObjectCommand({
