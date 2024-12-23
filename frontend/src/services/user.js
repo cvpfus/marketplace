@@ -1,6 +1,7 @@
+import { API_URL } from "@/constants";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000/users";
+const BASE_URL = `${API_URL}/users`;
 
 export const registerUser = async ({ name, username, password }) => {
   try {

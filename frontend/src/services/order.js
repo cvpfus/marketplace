@@ -1,23 +1,28 @@
+import { API_URL } from "@/constants";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000/orders";
+const BASE_URL = `${API_URL}/orders`;
 
-export const addOrder = async ({amount, productId, token}) => {
+export const addOrder = async ({ amount, productId, token }) => {
   try {
-    const response = await axios.post(BASE_URL, {
-      amount,
-      productId,
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await axios.post(
+      BASE_URL,
+      {
+        amount,
+        productId,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error);
   }
-}
+};
 
 export const getBuyersOrders = async ({ token }) => {
   try {
