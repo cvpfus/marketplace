@@ -23,7 +23,7 @@ export const OrderCard = ({ order }) => {
             <img
               src={order.Image}
               alt={order["Product Name"]}
-              className="w-20 self-center"
+              className="w-20 h-20 flex-shrink-0 object-contain"
             />
             <div>
               <div className="font-bold line-clamp-1">
