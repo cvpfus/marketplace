@@ -6,6 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Label } from "@/components/ui/label";
 
 export const Register = () => {
   const register = useRegister();
@@ -13,7 +14,7 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = (event) => {
@@ -21,7 +22,7 @@ export const Register = () => {
     register.mutate(
       {
         name,
-        username,
+        email,
         password,
       },
       {
@@ -47,7 +48,9 @@ export const Register = () => {
         </Link>
       </div>
       <form onSubmit={handleRegister} className="w-full flex flex-col gap-4">
+        <Label htmlFor="name">Name</Label>
         <Input
+          id="name"
           placeholder={"Name"}
           onChange={(e) => {
             setName(e.target.value);
@@ -57,16 +60,21 @@ export const Register = () => {
           required
         />
 
+        <Label htmlFor="email">Email</Label>
         <Input
-          placeholder={"Username"}
+          id="email"
+          placeholder={"Email"}
           onChange={(e) => {
-            setUsername(e.target.value);
+            setEmail(e.target.value);
           }}
-          value={username}
+          value={email}
           minLength={4}
           required
         />
+
+        <Label htmlFor="password">Password</Label>
         <Input
+          id="password"
           placeholder={"Password"}
           type={"password"}
           onChange={(e) => {

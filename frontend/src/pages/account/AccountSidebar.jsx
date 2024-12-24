@@ -76,7 +76,7 @@ export function AccountSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> <span>{item.username}</span>
+                  <User2 /> <span>{item.name}</span>
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

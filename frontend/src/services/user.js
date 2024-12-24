@@ -3,11 +3,11 @@ import axios from "axios";
 
 const BASE_URL = `${API_URL}/users`;
 
-export const registerUser = async ({ name, username, password }) => {
+export const registerUser = async ({ name, email, password }) => {
   try {
     const response = await axios.post(`${BASE_URL}/register`, {
       name,
-      username,
+      email,
       password,
     });
     return response.data;
@@ -16,10 +16,10 @@ export const registerUser = async ({ name, username, password }) => {
   }
 };
 
-export const loginUser = async ({ username, password }) => {
+export const loginUser = async ({ email, password }) => {
   try {
     const response = await axios.post(`${BASE_URL}/login`, {
-      username,
+      email,
       password,
     });
     return response.data;

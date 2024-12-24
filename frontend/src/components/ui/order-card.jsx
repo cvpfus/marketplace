@@ -9,7 +9,7 @@ export const OrderCard = ({ order }) => {
       <div className="flex flex-col xs:flex-row justify-between items-center">
         <div className="flex items-center gap-1.5">
           <Store className="size-4" />
-          <span className="font-semibold">{order["Seller Username"]}</span>
+          <span className="font-semibold">{order["Seller Name"]}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-sm">{order["Date Ordered"]}</span>

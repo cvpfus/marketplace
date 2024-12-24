@@ -98,7 +98,6 @@ export const ProductListings = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
 
-    setOpen(false);
     setName("");
     setDescription("");
     setPrice("");
@@ -117,8 +116,9 @@ export const ProductListings = () => {
           toast({
             title: "Success",
             description: "Product added successfully",
-            variant: "success",
           });
+
+          setOpen(false);
 
           queryClient.refetchQueries({ queryKey: ["user-products"] });
         },
@@ -236,7 +236,13 @@ export const ProductListings = () => {
                 />
               </div>
               <DialogFooter>
-                <Button>Add</Button>
+                <Button
+                  className="flex items-center gap-2"
+                  disabled={addProduct.isPending}
+                >
+                  {addProduct.isPending && <Loader2 className="animate-spin" />}
+                  <span>Add</span>
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>

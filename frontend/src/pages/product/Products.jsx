@@ -26,7 +26,7 @@ function Products() {
                 name: product.Name,
                 price: product.Price,
                 imageUrl: product.Image,
-                username: product.Username,
+                sellerName: product["Seller Name"],
                 id: product["Record ID"],
               }}
             />

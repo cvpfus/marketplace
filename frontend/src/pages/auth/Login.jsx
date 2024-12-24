@@ -6,20 +6,21 @@ import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { Label } from "@/components/ui/label";
 
 export const Login = () => {
   const login = useLogin();
 
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (event) => {
     event.preventDefault();
     login.mutate(
       {
-        username,
+        email,
         password,
       },
       {
@@ -45,16 +46,21 @@ export const Login = () => {
         </Link>
       </div>
       <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
+        <Label htmlFor="email">Email</Label>
         <Input
-          placeholder={"Username"}
+          id="email"
+          placeholder={"Email"}
           onChange={(e) => {
-            setUsername(e.target.value);
+            setEmail(e.target.value);
           }}
-          value={username}
+          value={email}
           minLength={4}
           required
         />
+
+        <Label htmlFor="password">Password</Label>
         <Input
+          id="password"
           placeholder={"Password"}
           type={"password"}
           onChange={(e) => {

@@ -84,8 +84,7 @@ export const getProducts = (req, res, next) => {
           Price: record.fields.Price,
           Image: record.fields["Image URL"],
           "Record ID": record.id,
-          Username: record.fields.Username,
-          TestImage: record.fields.Image,
+          "Seller Name": record.fields["Seller Name"],
         }))
       );
     });
@@ -94,7 +93,7 @@ export const getProducts = (req, res, next) => {
 export const getProductsByOwner = (req, res) => {
   const { ownerId } = req.query;
 
-  const { recordId, userId } = req.auth;
+  const { recordId, email } = req.auth;
 
   if (recordId !== ownerId) {
     res.status(403).json({ error: "Unauthorized" });
@@ -103,7 +102,7 @@ export const getProductsByOwner = (req, res) => {
 
   base("Products")
     .select({
-      filterByFormula: `{User ID} = "${userId}"`,
+      filterByFormula: `{Seller Email} = "${email.toLowerCase()}"`,
     })
     .all((err, records) => {
       if (err) {

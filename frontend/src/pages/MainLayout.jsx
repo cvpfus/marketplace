@@ -26,9 +26,12 @@ export const MainLayout = () => {
     removeItem();
   };
 
+  const itemExists =
+    item && item.token && item.email && item.name && item.userRecordId;
+
   return (
     <div className="flex flex-col mx-8 md:mx-16 my-8 gap-8">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8"> 
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8">
         <Link to="/">
           <MarketplaceLogo />
         </Link>
@@ -39,9 +42,9 @@ export const MainLayout = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <div className="flex items-center gap-2">
-          {item && (
+          {itemExists && (
             <>
-              <span>{item.username}</span>
+              <span>{item.name}</span>
               <Button onClick={handleAccount}>Account</Button>
               <Button
                 onClick={handleLogout}
@@ -51,7 +54,7 @@ export const MainLayout = () => {
               </Button>
             </>
           )}
-          {!item && (
+          {!itemExists && (
             <>
               <Button onClick={() => navigate("/login")}>Login</Button>
               <Button onClick={() => navigate("/register")}>Register</Button>

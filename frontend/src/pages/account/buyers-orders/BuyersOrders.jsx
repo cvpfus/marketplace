@@ -24,8 +24,8 @@ export const BuyersOrders = () => {
 
   const [colDefs, _] = useState([
     { field: "Product Name", cellRenderer: ProductNameRenderer },
-    { field: "Name" },
-    { field: "Address" },
+    { field: "Buyer Name" },
+    { field: "Buyer Address" },
     { field: "Amount" },
     { field: "Order Status", cellRenderer: OrderStatusRenderer },
     { field: "Actions", cellRenderer: UpdateStatusRenderer },

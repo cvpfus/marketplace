@@ -97,12 +97,12 @@ export const UpdateStatusRenderer = ({ data }) => {
 
           <div className="grid gap-4 grid-cols-4 items-center">
             <span className="text-center">Buyer Name</span>
-            <Input className="col-span-3" readOnly value={data.Name} />
+            <Input className="col-span-3" readOnly value={data["Buyer Name"]} />
           </div>
 
           <div className="grid gap-4 grid-cols-4 items-center">
-            <span className="text-center">Address</span>
-            <Textarea className="col-span-3" readOnly value={data.Address} />
+            <span className="text-center">Buyer Address</span>
+            <Textarea className="col-span-3" readOnly value={data["Buyer Address"]} />
           </div>
 
           <div className="grid gap-4 grid-cols-4 items-center">

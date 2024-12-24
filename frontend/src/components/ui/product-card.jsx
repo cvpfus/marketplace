@@ -18,7 +18,7 @@ export const ProductCard = ({ product }) => {
       <div className="mt-2 mb-1">
         <h3 className="text-sm mt-2 line-clamp-2">{product.name}</h3>
         <h2 className="font-bold">{formatPrice(product.price)}</h2>
-        <Badge className="rounded-xl pt-0">{product.username}</Badge>
+        <Badge className="rounded-xl pt-0">{product.sellerName}</Badge>
       </div>
     </Link>
   );

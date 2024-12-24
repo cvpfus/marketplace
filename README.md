@@ -4,12 +4,6 @@
 
 https://marketplace.cvpfus.xyz
 
-## Demo Account
-
-Username: user
-
-Password: user
-
 ## Tech Stack
 
 ### Frontend

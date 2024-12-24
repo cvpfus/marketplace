@@ -7,7 +7,7 @@ export const addOrder = (req, res) => {
 
   const userId = req.auth.recordId;
 
-  if (amount > 100) {
+  if (Number(amount) > 100) {
     return res.status(400).json({ error: "Amount cannot be more than 100" });
   }
 
